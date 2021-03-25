@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "3jU7FdrybzANEak1l6kFouWRaxx+fyaoRBHEWdc0vPiy3cjMRL8ZsdOE9cUxGVKXt6D6GNQYHpYnxXZdBA+2VQ==",
+  "success": true,
+  "projectFilePath": "D:\\Kuliah\\Internship\\Training\\ASP\\self_learning\\MachineApp\\MachineApp.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\nurel\\.nuget\\packages\\identitymodel\\5.1.0\\identitymodel.5.1.0.nupkg.sha512",
+    "C:\\Users\\nurel\\.nuget\\packages\\system.text.encodings.web\\5.0.1\\system.text.encodings.web.5.0.1.nupkg.sha512",
+    "C:\\Users\\nurel\\.nuget\\packages\\system.text.json\\5.0.1\\system.text.json.5.0.1.nupkg.sha512"
+  ],
+  "logs": []
+}
