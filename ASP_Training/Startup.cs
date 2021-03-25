@@ -47,6 +47,15 @@ namespace ASP_Training
                     options.Authority = "https://sso.accelist.com/auth/realms/Dev";
                     options.Audience = "customer-api";
                 });
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("BelajarNextJs",
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:3000");
+                    });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -78,6 +87,8 @@ namespace ASP_Training
 
             app.UseRouting();
 
+            // cors
+            app.UseCors("BelajarNextJs");
 
             // auth
             app.UseAuthentication();

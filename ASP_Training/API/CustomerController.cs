@@ -13,7 +13,7 @@ namespace ASP_Training.API
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(AuthenticationSchemes = "customer-api")]
+    //[Authorize(AuthenticationSchemes = "customer-api")]
     public class CustomerController : ControllerBase
     {
         ShopDbContext DB { set; get; }
