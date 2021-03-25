@@ -40,6 +40,13 @@ namespace ASP_Training
             });
 
             services.AddSwaggerDocument();
+
+            services.AddAuthentication()
+                .AddJwtBearer("customer-api", options =>
+                {
+                    options.Authority = "https://sso.accelist.com/auth/realms/Dev";
+                    options.Audience = "customer-api";
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -70,6 +77,11 @@ namespace ASP_Training
             app.UseSwaggerUi3();
 
             app.UseRouting();
+
+
+            // auth
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

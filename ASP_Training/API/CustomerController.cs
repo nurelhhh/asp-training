@@ -1,4 +1,5 @@
 ﻿using ASP_Training.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,7 @@ namespace ASP_Training.API
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = "customer-api")]
     public class CustomerController : ControllerBase
     {
         ShopDbContext DB { set; get; }
