@@ -23,9 +23,9 @@ const TodoItem: React.FunctionComponent<{
     };
 
     return (
-        <div>
+        <div className="m-2">
             <span>{props.item.name}</span>
-            <button onClick={onClick} type="button">Remove</button>
+            <button className="btn btn-danger" onClick={onClick} type="button">Remove</button>
         </div>
     );
 };
@@ -89,7 +89,7 @@ class Todo extends React.Component<{}, TodoState> {
             <div>
                 <div>
                     <input value={this.state.textInput} onChange={this.onTextChange}/>
-                    <button onClick={this.addToList} type="button">Add</button>
+                    <button className="btn btn-primary" onClick={this.addToList} type="button">Add</button>
                     <h2>{this.state.textInput}</h2>
                 </div>
                 <TodoList onChange={this.onListChanged} list={this.state.todoList} />
