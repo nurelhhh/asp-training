@@ -1,0 +1,15 @@
+D:\Kuliah\Internship\Training\ASP\self_learning\ASP_Training.Entities\bin\Debug\net5.0\ASP_Training.Entities.deps.json
+D:\Kuliah\Internship\Training\ASP\self_learning\ASP_Training.Entities\bin\Debug\net5.0\ASP_Training.Entities.runtimeconfig.json
+D:\Kuliah\Internship\Training\ASP\self_learning\ASP_Training.Entities\bin\Debug\net5.0\ASP_Training.Entities.runtimeconfig.dev.json
+D:\Kuliah\Internship\Training\ASP\self_learning\ASP_Training.Entities\bin\Debug\net5.0\ASP_Training.Entities.dll
+D:\Kuliah\Internship\Training\ASP\self_learning\ASP_Training.Entities\bin\Debug\net5.0\ref\ASP_Training.Entities.dll
+D:\Kuliah\Internship\Training\ASP\self_learning\ASP_Training.Entities\bin\Debug\net5.0\ASP_Training.Entities.pdb
+D:\Kuliah\Internship\Training\ASP\self_learning\ASP_Training.Entities\obj\Debug\net5.0\ASP_Training.Entities.csprojAssemblyReference.cache
+D:\Kuliah\Internship\Training\ASP\self_learning\ASP_Training.Entities\obj\Debug\net5.0\ASP_Training.Entities.GeneratedMSBuildEditorConfig.editorconfig
+D:\Kuliah\Internship\Training\ASP\self_learning\ASP_Training.Entities\obj\Debug\net5.0\ASP_Training.Entities.AssemblyInfoInputs.cache
+D:\Kuliah\Internship\Training\ASP\self_learning\ASP_Training.Entities\obj\Debug\net5.0\ASP_Training.Entities.AssemblyInfo.cs
+D:\Kuliah\Internship\Training\ASP\self_learning\ASP_Training.Entities\obj\Debug\net5.0\ASP_Training.Entities.csproj.CoreCompileInputs.cache
+D:\Kuliah\Internship\Training\ASP\self_learning\ASP_Training.Entities\obj\Debug\net5.0\ASP_Training.Entities.dll
+D:\Kuliah\Internship\Training\ASP\self_learning\ASP_Training.Entities\obj\Debug\net5.0\ref\ASP_Training.Entities.dll
+D:\Kuliah\Internship\Training\ASP\self_learning\ASP_Training.Entities\obj\Debug\net5.0\ASP_Training.Entities.pdb
+D:\Kuliah\Internship\Training\ASP\self_learning\ASP_Training.Entities\obj\Debug\net5.0\ASP_Training.Entities.genruntimeconfig.cache
