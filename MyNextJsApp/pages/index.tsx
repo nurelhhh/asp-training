@@ -20,7 +20,7 @@ class Index extends React.Component<{}, {
     render() {
         return (
             <div>
-                <button onClick={this.onClick} type="button">{this.state.num}</button>
+                <button className="btn btn-primary" onClick={this.onClick} type="button">{this.state.num}</button>
                 <br/>
                 <Link href="/todo">
                     <a>Goto Todo List</a>
