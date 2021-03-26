@@ -1,15 +1,10 @@
 import { Layout } from '../shared/layout';
-import axios from 'axios';
 import React from "react";
+import { CustomerClient, CustomerListItem } from '../../api/shop_api';
 
-interface CustomerListItem {
-    customerID: string;
-    name: string;
-    email: string;
-}
 
 function RenderCustomerListItemRows(customers: CustomerListItem[]){
-    const rows = customers.map(Q => <tr>
+    const rows = customers.map(Q => <tr key={Q.customerID}>
         <td>{Q.customerID}</td>
         <td>{Q.name}</td>
         <td>{Q.email}</td>
@@ -29,9 +24,11 @@ class Customer extends React.Component<{}, {
     }
 
     async componentDidMount() {
-        const response = await axios.get<CustomerListItem[]>('https://localhost:44324/api/customer');
+        const client = new CustomerClient('https://localhost:44324');
+        const response = await client.getAll();
+        
         this.setState({
-            customers: response.data
+            customers: response
         })
     }
 
