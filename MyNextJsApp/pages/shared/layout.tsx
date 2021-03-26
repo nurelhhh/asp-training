@@ -22,7 +22,16 @@ function GetNavigationLinkAriaCurrent(active: boolean) {
 const NavigationLink: React.FunctionComponent<{
     href: string
 }> = (props) => {
-    const active = (useRouter().pathname.toLowerCase().includes(props.href.toLowerCase()));
+    let active;
+    if (props.href === '/') {
+        if (useRouter().pathname === '/') {
+            active = true;
+        } else {
+            active = false;
+        }
+    } else {
+        active = (useRouter().pathname.toLowerCase().includes(props.href.toLowerCase()));
+    }
 
     return (
         <li className="nav-item">

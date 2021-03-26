@@ -3,7 +3,8 @@ import React from "react";
 import { CustomerClient, CustomerListItem } from '../../api/shop_api';
 import Link from 'next/link';
 import Swal, { SweetAlertResult } from 'sweetalert2';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 const DeleteCustomerButton: React.FunctionComponent<{
     customerID: string,
@@ -43,8 +44,8 @@ const DeleteCustomerButton: React.FunctionComponent<{
     };
 
     return (
-        <button onClick={onClick} className="btn btn-danger btn-sm" type="button">
-            Delete
+        <button onClick={onClick} className="btn btn-danger btn" type="button">
+            <FontAwesomeIcon icon={faTimes} />
         </button>
     );
 };
@@ -99,16 +100,18 @@ class Customer extends React.Component<{}, {
                 <h1>Manage Customers</h1>
                 <p>
                     <Link href="/customer/create">
-                        <button className="btn btn-secondary">Manage Customers</button>
+                        <button className="btn btn-secondary">
+                            <FontAwesomeIcon icon={faPlus} />
+                            <span className="ml-2">Manage Customer</span></button>
                     </Link>
                 </p>
-                <table className="table table-hover table-striped table-sm">
+                <table className="table table-hover table-striped table-md">
                     <thead className="bg-dark text-light">
                         <tr>
                             <th>Customer ID</th>
                             <th>Name</th>
                             <th>Email</th>
-                            <th>Action</th>
+                            <th></th>
                         </tr>
                     </thead>
                     {RenderCustomerListItemRows(this.state.customers, this.onReloadCustomerData)}

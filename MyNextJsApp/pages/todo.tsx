@@ -24,7 +24,7 @@ const TodoItem: React.FunctionComponent<{
 
     return (
         <div className="m-2">
-            <span>{props.item.name}</span>
+            <span className="mx-2">{props.item.name}</span>
             <button className="btn btn-danger" onClick={onClick} type="button">Remove</button>
         </div>
     );
