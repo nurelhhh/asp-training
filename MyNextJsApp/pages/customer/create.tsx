@@ -155,8 +155,10 @@ class CreateCustomer extends React.Component<{}, {
             Swal.fire({
                 title: 'Submit failed',
                 text: 'An error has occured. Please try again or contact administrator',
-                icon: 'success'
+                icon: 'error'
             });
+
+            return;
         } finally {
             this.setState({
                 busy: false
