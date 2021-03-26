@@ -22,7 +22,7 @@ function GetNavigationLinkAriaCurrent(active: boolean) {
 const NavigationLink: React.FunctionComponent<{
     href: string
 }> = (props) => {
-    const active = (useRouter().pathname === props.href);
+    const active = (useRouter().pathname.toLowerCase().includes(props.href.toLowerCase()));
 
     return (
         <li className="nav-item">
@@ -75,7 +75,7 @@ export class Layout extends React.Component<{
                     {this.props.children}
                 </main>
                 <footer>
-                    <script src="bootstrap.bundle.min.js"></script>
+                    <script src="/bootstrap.bundle.min.js"></script>
                 </footer>
             </div>
         );

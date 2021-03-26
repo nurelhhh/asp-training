@@ -2,13 +2,64 @@ import { Layout } from '../shared/layout';
 import React from "react";
 import { CustomerClient, CustomerListItem } from '../../api/shop_api';
 import Link from 'next/link';
+import Swal, { SweetAlertResult } from 'sweetalert2';
 
 
-function RenderCustomerListItemRows(customers: CustomerListItem[]){
+const DeleteCustomerButton: React.FunctionComponent<{
+    customerID: string,
+    name?: string,
+    onDeleted: () => void
+}> = (props) => {
+
+    const onClick = async () => {
+        const confirm = await Swal.fire<SweetAlertResult>({
+            title: 'Confirm delete?',
+            text: `Delete customer ${props.name}? This action cannot be undone`,
+            icon: 'warning',
+            confirmButtonColor: '#dc3545',
+            confirmButtonText: 'Delete' 
+        });
+
+        if (confirm.isConfirmed === false) {
+            return;   
+        }
+
+        const client = new CustomerClient('https://localhost:44324');
+        await client.delete(props.customerID);
+
+        Swal.fire<SweetAlertResult>({
+            toast: true,
+            timerProgressBar: true,
+            timer: 5000,
+            showConfirmButton: false,
+            position: 'top-right',
+            icon: 'success',
+            title: 'Successfully deleted customer ' + props.name
+        });
+
+        if (props.onDeleted) {
+            props.onDeleted();
+        }
+    };
+
+    return (
+        <button onClick={onClick} className="btn btn-danger btn-sm" type="button">
+            Delete
+        </button>
+    );
+};
+
+function RenderCustomerListItemRows(
+    customers: CustomerListItem[],
+    onDeleted: () => void
+){
     const rows = customers.map(Q => <tr key={Q.customerID}>
         <td>{Q.customerID}</td>
         <td>{Q.name}</td>
         <td>{Q.email}</td>
+        <td>
+            <DeleteCustomerButton customerID={Q.customerID} name={Q.name} onDeleted={onDeleted}/>
+        </td>
     </tr>);
 
     return <tbody>{rows}</tbody>;
@@ -33,6 +84,15 @@ class Customer extends React.Component<{}, {
         })
     }
 
+    onReloadCustomerData = async () => {
+        const client = new CustomerClient('https://localhost:44324');
+        const response = await client.getAll();
+        
+        this.setState({
+            customers: response
+        })
+    }
+
     render() {
         return (
             <div>
@@ -48,9 +108,10 @@ class Customer extends React.Component<{}, {
                             <th>Customer ID</th>
                             <th>Name</th>
                             <th>Email</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
-                    {RenderCustomerListItemRows(this.state.customers)}
+                    {RenderCustomerListItemRows(this.state.customers, this.onReloadCustomerData)}
                 </table>
             </div>
         );

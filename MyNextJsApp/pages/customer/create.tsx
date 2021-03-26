@@ -2,6 +2,7 @@ import { Layout } from "../shared/layout";
 import React from 'react';
 import { CustomerClient } from "../../api/shop_api";
 import Swal from "sweetalert2";
+import Link from 'next/link';
 
 class CreateCustomer extends React.Component<{}, {
     form: {
@@ -161,6 +162,11 @@ class CreateCustomer extends React.Component<{}, {
     render() {
         return (
             <div>
+                <Link href="/customer">
+                    <button className="btn btn-secondary" type="button">Back</button>
+                </Link>
+                
+                <h1>Create</h1>
                 <form onSubmit={this.onSubmit} >
                     <div className="mb-3">
                         <label htmlFor="name">Name</label>
@@ -186,7 +192,6 @@ class CreateCustomer extends React.Component<{}, {
 export default function CreateCustomerPage() {
     return (
         <Layout title="Create Customer">
-            <h1>Create</h1>
             <CreateCustomer />
         </Layout>
     );
