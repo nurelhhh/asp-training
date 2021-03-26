@@ -1,6 +1,7 @@
 import { Layout } from '../shared/layout';
 import React from "react";
 import { CustomerClient, CustomerListItem } from '../../api/shop_api';
+import Link from 'next/link';
 
 
 function RenderCustomerListItemRows(customers: CustomerListItem[]){
@@ -35,6 +36,12 @@ class Customer extends React.Component<{}, {
     render() {
         return (
             <div>
+                <h1>Manage Customers</h1>
+                <p>
+                    <Link href="/customer/create">
+                        <button className="btn btn-secondary">Manage Customers</button>
+                    </Link>
+                </p>
                 <table className="table table-hover table-striped table-sm">
                     <thead className="bg-dark text-light">
                         <tr>

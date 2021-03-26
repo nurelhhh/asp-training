@@ -53,7 +53,9 @@ namespace ASP_Training
                 options.AddPolicy("BelajarNextJs",
                     builder =>
                     {
-                        builder.WithOrigins("http://localhost:3000");
+                        builder.WithOrigins("http://localhost:3000")
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
                     });
             });
         }
