@@ -1,12 +1,23 @@
-import { Layout } from "../shared/layout";
+import { Layout } from "../../shared/layout";
 import React from 'react';
-import { CustomerClient } from "../../api/shop_api";
+import { CustomerClient } from "../../../api/shop_api";
 import Swal from "sweetalert2";
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner, faChevronUp, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { useRouter, withRouter } from "next/router";
+import { GetServerSideProps } from "next";
 
-class CreateCustomer extends React.Component<{}, {
+
+/**
+ * How this edit page works:
+ * 1. Access this edit page with the supplied URL route parameter.
+ * 2. Since you provides getServerSideProps, Next.js will determine that this page requires a blocking data requirements, so you can obtain the URL route.
+ * 3. Render this page's included components (from EditCustomerPage -> Layout -> EditCustomer -> etc....).
+ */
+
+
+class EditCustomer extends React.Component<{}, {
     form: {
         name: string,
         email: string
@@ -22,8 +33,14 @@ class CreateCustomer extends React.Component<{}, {
     busy: boolean
 }> {
 
+    customerID: string;
+    prevName: string
+
     constructor(props) {
         super(props);
+        this.customerID = props.customerID;
+        this.prevName = '';
+
         this.state = {
             form: {
                 name: '',
@@ -40,6 +57,26 @@ class CreateCustomer extends React.Component<{}, {
             busy: false
         };
     }
+
+    async componentDidMount() {        
+        const client = new CustomerClient('https://localhost:44324');
+
+        if (this.customerID === undefined) {
+            this.customerID = 'wkwkkwkw';
+        }
+
+        const user = await client.get(this.customerID);
+        this.prevName = user.name? user.name : '';
+
+        const form = this.state.form;
+        form.name = user.name ? user.name : '';
+        form.email = user.email ? user.email : '';
+
+        this.setState({
+            form: form
+        });
+    }
+
     onNameChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
         const form = this.state.form;
         form.name = e.target.value;
@@ -147,9 +184,9 @@ class CreateCustomer extends React.Component<{}, {
         
         try {
             const client = new CustomerClient('https://localhost:44324');
-            await client.post({
+            await client.put(this.customerID, {
                 name: form.name,
-                email: form.email,
+                email: form.email
             });
         } catch (error) {
             Swal.fire({
@@ -167,10 +204,6 @@ class CreateCustomer extends React.Component<{}, {
         
 
         this.setState({
-            form: {
-                name: '',
-                email: ''
-            },
             errors: {
                 name: '',
                 email: ''
@@ -183,7 +216,7 @@ class CreateCustomer extends React.Component<{}, {
 
         Swal.fire({
             title: 'Success!',
-            text: 'Successfully created new custome with name: ' + form.name,
+            text: 'Successfully updated user!',
             icon: 'success'
         });
     }
@@ -207,7 +240,7 @@ class CreateCustomer extends React.Component<{}, {
                         </span>
                     </button>
                 </Link>
-                <h1>Create</h1>
+                <h1>Edit customer {this.prevName}</h1>
 
                 <form onSubmit={this.onSubmit} >
                     <fieldset disabled={this.state.busy}>
@@ -227,7 +260,7 @@ class CreateCustomer extends React.Component<{}, {
                             <button className="btn btn-primary" type="submit">
                                 <this.getSubmitButtonIcon />
                                 <span className="ms-2">
-                                    Create
+                                    Update
                                 </span>
                             </button>
                         </div>
@@ -238,10 +271,41 @@ class CreateCustomer extends React.Component<{}, {
     }
 }
 
-export default function CreateCustomerPage() {
+
+/**
+ * Function component for edit customer page.
+ * @param param0 
+ * @returns 
+ */
+
+function EditCustomerPage () {
+    // Use useRouter to obtain the URL parameters.
+    // You can also use withRouter instead.
+    // Reference: https://nextjs.org/docs/api-reference/next/router#userouter.
+    const { id } = useRouter().query;
+
+    // To obtain the URL route parameter name, the object name must have the same name as the .tsx file name of this page.
+    // In this case, our .tsx file is named [id].tsx, so we must bind the router.query object with name 'id'.
     return (
-        <Layout title="Create Customer">
-            <CreateCustomer />
+        <Layout title="Edit Customer">
+            <EditCustomer customerID={id}></EditCustomer>
         </Layout>
-    );
+    ); 
 }
+
+
+// The getServerSideProps must be present in the page if we want to acquire the URL route parameter value on the initial page load due to Automatic Static Optimization.
+// Reference: https://nextjs.org/docs/advanced-features/automatic-static-optimization.
+/**
+ * If you export an async function called getServerSideProps from a page, Next.js will pre-render this page on each request using the data returned by getServerSideProps.
+ * Reference: https://nextjs.org/docs/basic-features/data-fetching#getserversideprops-server-side-rendering.
+ * @param context 
+ */
+export const getServerSideProps: GetServerSideProps = async (context) => {
+    return {
+        props: {
+        }
+    };
+}
+
+export default EditCustomerPage;

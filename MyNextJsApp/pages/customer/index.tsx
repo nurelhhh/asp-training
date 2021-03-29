@@ -4,7 +4,20 @@ import { CustomerClient, CustomerListItem } from '../../api/shop_api';
 import Link from 'next/link';
 import Swal, { SweetAlertResult } from 'sweetalert2';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faUserEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+
+
+const EditCustomerButton: React.FunctionComponent<{
+    customerID: string,
+}> = (props) => {
+    return (
+        <Link href={`/customer/edit/[id]`} as={`/customer/edit/${props.customerID}`}>
+             <button className="btn btn-secondary">
+                <FontAwesomeIcon icon={faUserEdit}></FontAwesomeIcon>
+            </button>
+        </Link>
+    );
+};
 
 const DeleteCustomerButton: React.FunctionComponent<{
     customerID: string,
@@ -44,9 +57,9 @@ const DeleteCustomerButton: React.FunctionComponent<{
     };
 
     return (
-        <button onClick={onClick} className="btn btn-danger btn" type="button">
-            <FontAwesomeIcon icon={faTimes} />
-        </button>
+            <button onClick={onClick} className="btn btn-danger mx-2" type="button">
+                <FontAwesomeIcon icon={faTrash} />
+            </button>
     );
 };
 
@@ -59,6 +72,7 @@ function RenderCustomerListItemRows(
         <td>{Q.name}</td>
         <td>{Q.email}</td>
         <td>
+            <EditCustomerButton customerID={Q.customerID} name={Q.name} email={Q.email} />
             <DeleteCustomerButton customerID={Q.customerID} name={Q.name} onDeleted={onDeleted}/>
         </td>
     </tr>);
@@ -100,9 +114,9 @@ class Customer extends React.Component<{}, {
                 <h1>Manage Customers</h1>
                 <p>
                     <Link href="/customer/create">
-                        <button className="btn btn-secondary">
+                        <button className="btn btn-dark">
                             <FontAwesomeIcon icon={faPlus} />
-                            <span className="ml-2">Manage Customer</span></button>
+                            <span className="ms-2">Manage Customer</span></button>
                     </Link>
                 </p>
                 <table className="table table-hover table-striped table-md">
