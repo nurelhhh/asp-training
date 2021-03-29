@@ -183,7 +183,7 @@ class CreateCustomer extends React.Component<{}, {
 
         Swal.fire({
             title: 'Success!',
-            text: 'Successfully created new custome with name: ' + form.name,
+            text: 'Successfully created new customer with name: ' + form.name,
             icon: 'success'
         });
     }
