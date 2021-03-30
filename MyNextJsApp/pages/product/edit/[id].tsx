@@ -7,6 +7,7 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { useRouter } from "next/router";
 import { GetServerSideProps } from "next";
 import { ProductForm } from "../../../forms/ProductCreateOrUpdateComponent";
+import ErrorPage from 'next/error';
 
 
 class EditProduct extends React.Component<{
@@ -14,7 +15,8 @@ class EditProduct extends React.Component<{
 }, {
     name: string,
     price: string,
-    renderFormOk: boolean
+    renderFormOk: boolean,
+    notFound: boolean
 }> {
     productID: string;
     prevName: string
@@ -29,14 +31,24 @@ class EditProduct extends React.Component<{
         this.state = {
             name: '',
             price: '',
-            renderFormOk: false
+            renderFormOk: false,
+            notFound: false
         };
     }
 
     async componentDidMount() {
-        const client = new ProductClient('https://localhost:44324');
-
-        const user = await client.get(this.productID);
+        let user;
+        
+        try {
+            const client = new ProductClient('https://localhost:44324');
+            user = await client.get(this.productID);
+        } catch (err) {
+            this.setState({
+                notFound: true
+            });
+            return;
+        }
+        
         this.prevName = user.name ? user.name : '';
         this.prevPrice = user.price.toString();
 
@@ -45,7 +57,6 @@ class EditProduct extends React.Component<{
                 name: user.name ? user.name : '',
                 price: user.price.toString()
             });
-
         }
 
         this.setState({
@@ -62,6 +73,9 @@ class EditProduct extends React.Component<{
     }
 
     render() {
+        if (this.state.notFound) {
+            return <ErrorPage statusCode={404}></ErrorPage>
+        }
         return (
             <div>
                 <Link href="/product">

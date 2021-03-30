@@ -5,9 +5,8 @@ import Swal from "sweetalert2";
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner, faChevronUp, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import { useRouter } from "next/router";
 import { GetServerSideProps } from "next";
-
+import ErrorPage from 'next/error';
 
 /**
  * How this edit page works:
@@ -32,7 +31,8 @@ class EditCustomer extends React.Component<{
         name: boolean,
         email: boolean
     },
-    busy: boolean
+    busy: boolean,
+    notFound: boolean
 }> {
 
     customerID: string;
@@ -56,18 +56,24 @@ class EditCustomer extends React.Component<{
                 name: false,
                 email: false
             },
-            busy: false
+            busy: false,
+            notFound: false
         };
     }
 
     async componentDidMount() {
-        const client = new CustomerClient('https://localhost:44324');
+        let user;
 
-        if (this.customerID === undefined) {
-            this.customerID = 'wkwkkwkw';
+        try {
+            const client = new CustomerClient('https://localhost:44324');
+            user = await client.get(this.customerID);
+        } catch (err) {
+            this.setState({
+                notFound: true
+            });
+            return;
         }
 
-        const user = await client.get(this.customerID);
         this.prevName = user.name ? user.name : '';
 
         const form = this.state.form;
@@ -232,6 +238,9 @@ class EditCustomer extends React.Component<{
     }
 
     render() {
+        if (this.state.notFound) {
+            return <ErrorPage statusCode={404}></ErrorPage>
+        }
         return (
             <div>
                 <Link href="/customer">
