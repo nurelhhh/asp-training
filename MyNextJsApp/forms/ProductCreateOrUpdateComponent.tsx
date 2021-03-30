@@ -15,7 +15,8 @@ interface ProductFormProps {
     },
     onSubmit: () => void,
     clearForm: boolean,
-    successMsg: string
+    successMsg: string,
+    successBtn: string
 }
 
 export class ProductForm extends React.Component<ProductFormProps, {
@@ -42,7 +43,7 @@ export class ProductForm extends React.Component<ProductFormProps, {
         this.data = props;
         this.state = {
             form: {
-                name: this.data.values ? this.data.values.name : '' ,
+                name: this.data.values ? this.data.values.name : '',
                 price: this.data.values ? this.data.values.price : '',
             },
             errors: {
@@ -70,7 +71,7 @@ export class ProductForm extends React.Component<ProductFormProps, {
             dirty: dirty
         });
 
-        this.data.setValues.name(e); 
+        this.data.setValues.name(e);
 
         this.validate();
     }
@@ -101,7 +102,7 @@ export class ProductForm extends React.Component<ProductFormProps, {
         if (!this.state.form.name) {
             errors.name = 'Name is required';
         }
-        
+
         if (!this.state.form.price) {
             errors.price = 'Price is required';
         } else {
@@ -163,7 +164,7 @@ export class ProductForm extends React.Component<ProductFormProps, {
         this.setState({
             busy: true
         });
-        
+
         try {
             this.data.onSubmit();
 
@@ -212,7 +213,7 @@ export class ProductForm extends React.Component<ProductFormProps, {
 
     getSubmitButtonIcon = () => {
         if (this.state.busy) {
-            return <FontAwesomeIcon icon={faSpinner} pulse={true}/>;
+            return <FontAwesomeIcon icon={faSpinner} pulse={true} />;
         } else {
             return <FontAwesomeIcon icon={faChevronUp} />;
         }
@@ -224,21 +225,21 @@ export class ProductForm extends React.Component<ProductFormProps, {
                 <fieldset disabled={this.state.busy}>
                     <div className="mb-3">
                         <label htmlFor="name">Name</label>
-                        <input type="text" value={this.state.form.name} onChange={this.onNameChanged} id="name" className={'form-control ' + this.hasErrorClassName(this.state.errors.name, this.state.dirty.name)}/>
-                        { this.state.errors.name && 
-                        <span className="text-danger small">{this.state.errors.name}</span> }
+                        <input type="text" value={this.state.form.name} onChange={this.onNameChanged} id="name" className={'form-control ' + this.hasErrorClassName(this.state.errors.name, this.state.dirty.name)} />
+                        {this.state.errors.name &&
+                            <span className="text-danger small">{this.state.errors.name}</span>}
                     </div>
                     <div className="mb-3">
                         <label htmlFor="price">Price</label>
-                        <input type="number" value={this.state.form.price} onChange={this.onPriceChanged} id="price" className={'form-control ' + this.hasErrorClassName(this.state.errors.price, this.state.dirty.price)}/>
-                        { this.state.errors.price && 
-                        <span className="text-danger small">{this.state.errors.price}</span> }
+                        <input type="number" value={this.state.form.price} onChange={this.onPriceChanged} id="price" className={'form-control ' + this.hasErrorClassName(this.state.errors.price, this.state.dirty.price)} />
+                        {this.state.errors.price &&
+                            <span className="text-danger small">{this.state.errors.price}</span>}
                     </div>
                     <div className="mb-3">
                         <button className="btn btn-primary" type="submit">
                             <this.getSubmitButtonIcon />
                             <span className="ms-2">
-                                Create
+                                {this.props.successBtn}
                             </span>
                         </button>
                     </div>

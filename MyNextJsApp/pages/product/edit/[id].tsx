@@ -33,11 +33,11 @@ class EditProduct extends React.Component<{
         };
     }
 
-    async componentDidMount() {        
+    async componentDidMount() {
         const client = new ProductClient('https://localhost:44324');
 
         const user = await client.get(this.productID);
-        this.prevName = user.name? user.name : '';
+        this.prevName = user.name ? user.name : '';
         this.prevPrice = user.price.toString();
 
         if (user) {
@@ -59,8 +59,6 @@ class EditProduct extends React.Component<{
             name: this.state.name,
             price: parseInt(this.state.price)
         });
-
-        console.log('Heheh from original onSubmit');
     }
 
     render() {
@@ -79,7 +77,7 @@ class EditProduct extends React.Component<{
                 {
                     this.state.renderFormOk &&
 
-                    <ProductForm 
+                    <ProductForm
                         values={{
                             name: this.prevName,
                             price: this.prevPrice
@@ -97,8 +95,9 @@ class EditProduct extends React.Component<{
                             }
                         }}
                         onSubmit={this.onSubmit}
-                        clearForm={false} 
-                        successMsg={'Successfully updated product with name: '} />
+                        clearForm={false}
+                        successMsg={'Successfully updated product with name: '}
+                        successBtn={'Update'} />
                 }
             </div>
         );
@@ -106,21 +105,29 @@ class EditProduct extends React.Component<{
 }
 
 
-function EditproductPage () {
-    const { id } = useRouter().query;
-
-    return (
-        <Layout title="Edit product">
-            <EditProduct productID={id} />
-        </Layout>
-    ); 
+interface ProductEditParamProps {
+    id: string
 }
 
+function EditproductPage(props: ProductEditParamProps) {
+    return (
+        <Layout title="Edit product">
+            <EditProduct productID={props.id} />
+        </Layout>
+    );
+}
 
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getServerSideProps: GetServerSideProps<ProductEditParamProps> = async (context) => {
+    let id = '';
+    if (context.params) {
+        const idRaw = context.params['id'];
+        if (idRaw && typeof (idRaw) === 'string') {
+            id = idRaw;
+        }
+    }
     return {
         props: {
+            id: id
         }
     };
 }

@@ -41,8 +41,8 @@ class CreateProduct extends React.Component<{}, {
                 </Link>
                 <h1>Create Product</h1>
 
-        
-                <ProductForm 
+
+                <ProductForm
                     setValues={{
                         name: (e?: React.ChangeEvent<HTMLInputElement>) => {
                             this.setState({
@@ -57,8 +57,9 @@ class CreateProduct extends React.Component<{}, {
                     }}
                     onSubmit={this.onSubmit}
                     clearForm={true}
-                    successMsg={'Successfully created new product with name: '} />
-                
+                    successMsg={'Successfully created new product with name: '}
+                    successBtn={'Create'} />
+
             </div>
         );
     }

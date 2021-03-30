@@ -19,11 +19,11 @@ const ProductDeleteButton: React.FunctionComponent<{
             text: `Delete product ${props.name}? This action cannot be undone`,
             icon: 'warning',
             confirmButtonColor: '#dc3545',
-            confirmButtonText: 'Delete' 
+            confirmButtonText: 'Delete'
         });
 
         if (confirm.isConfirmed === false) {
-            return;   
+            return;
         }
 
         const client = new ProductClient('https://localhost:44324');
@@ -45,9 +45,9 @@ const ProductDeleteButton: React.FunctionComponent<{
     };
 
     return (
-            <button onClick={onClick} className="btn btn-danger mx-2" type="button">
-                <FontAwesomeIcon icon={faTrash} />
-            </button>
+        <button onClick={onClick} className="btn btn-danger mx-2" type="button">
+            <FontAwesomeIcon icon={faTrash} />
+        </button>
     );
 };
 
@@ -55,7 +55,7 @@ const ProductEditButton: React.FunctionComponent<{
     productID: string
 }> = (props) => {
 
-    
+
     return (
         <Link href={`/product/edit/${props.productID}`}>
             <button className="btn btn-secondary">
@@ -123,7 +123,7 @@ class Product extends React.Component<{}, {
                         </span>
                     </button>
                 </Link>
-    
+
                 <table className="my-4 table table-hover table-striped table-md">
                     <thead className="bg-dark text-light">
                         <tr>
@@ -133,7 +133,7 @@ class Product extends React.Component<{}, {
                             <th></th>
                         </tr>
                     </thead>
-                    <RenderProductList list={this.state.productList} onDeleted={this.onProductListChanged}/>
+                    <RenderProductList list={this.state.productList} onDeleted={this.onProductListChanged} />
                 </table>
             </div>
         );

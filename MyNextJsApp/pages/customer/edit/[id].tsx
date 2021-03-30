@@ -26,7 +26,7 @@ class EditCustomer extends React.Component<{
     },
     errors: {
         name: string,
-        email:string
+        email: string
     },
     dirty: {
         name: boolean,
@@ -60,7 +60,7 @@ class EditCustomer extends React.Component<{
         };
     }
 
-    async componentDidMount() {        
+    async componentDidMount() {
         const client = new CustomerClient('https://localhost:44324');
 
         if (this.customerID === undefined) {
@@ -68,7 +68,7 @@ class EditCustomer extends React.Component<{
         }
 
         const user = await client.get(this.customerID);
-        this.prevName = user.name? user.name : '';
+        this.prevName = user.name ? user.name : '';
 
         const form = this.state.form;
         form.name = user.name ? user.name : '';
@@ -118,7 +118,7 @@ class EditCustomer extends React.Component<{
         if (!this.state.form.name) {
             errors.name = 'Name is required';
         }
-        
+
         if (!this.state.form.email) {
             errors.email = 'Email is required';
         } else {
@@ -183,7 +183,7 @@ class EditCustomer extends React.Component<{
         this.setState({
             busy: true
         });
-        
+
         try {
             const client = new CustomerClient('https://localhost:44324');
             await client.put(this.customerID, {
@@ -203,7 +203,7 @@ class EditCustomer extends React.Component<{
                 busy: false
             });
         }
-        
+
 
         this.setState({
             errors: {
@@ -225,7 +225,7 @@ class EditCustomer extends React.Component<{
 
     getSubmitButtonIcon = () => {
         if (this.state.busy) {
-            return <FontAwesomeIcon icon={faSpinner} pulse={true}/>;
+            return <FontAwesomeIcon icon={faSpinner} pulse={true} />;
         } else {
             return <FontAwesomeIcon icon={faChevronUp} />;
         }
@@ -248,15 +248,15 @@ class EditCustomer extends React.Component<{
                     <fieldset disabled={this.state.busy}>
                         <div className="mb-3">
                             <label htmlFor="name">Name</label>
-                            <input type="text" value={this.state.form.name} onChange={this.onNameChanged} id="name" className={'form-control ' + this.hasErrorClassName(this.state.errors.name, this.state.dirty.name)}/>
-                            { this.state.errors.name && 
-                            <span className="text-danger small">{this.state.errors.name}</span> }
+                            <input type="text" value={this.state.form.name} onChange={this.onNameChanged} id="name" className={'form-control ' + this.hasErrorClassName(this.state.errors.name, this.state.dirty.name)} />
+                            {this.state.errors.name &&
+                                <span className="text-danger small">{this.state.errors.name}</span>}
                         </div>
                         <div className="mb-3">
                             <label htmlFor="email">Email</label>
-                            <input type="email" value={this.state.form.email} onChange={this.onEmailChanged} id="email" className={'form-control ' + this.hasErrorClassName(this.state.errors.email, this.state.dirty.email)}/>
-                            { this.state.errors.email && 
-                            <span className="text-danger small">{this.state.errors.email}</span> }
+                            <input type="email" value={this.state.form.email} onChange={this.onEmailChanged} id="email" className={'form-control ' + this.hasErrorClassName(this.state.errors.email, this.state.dirty.email)} />
+                            {this.state.errors.email &&
+                                <span className="text-danger small">{this.state.errors.email}</span>}
                         </div>
                         <div className="mb-3">
                             <button className="btn btn-primary" type="submit">
@@ -274,25 +274,29 @@ class EditCustomer extends React.Component<{
 }
 
 
+interface CustomerEditParamProps {
+    id: string
+}
+
+
 /**
  * Function component for edit customer page.
  * @param param0 
  * @returns 
  */
 
-function EditCustomerPage () {
+function EditCustomerPage(props: CustomerEditParamProps) {
     // Use useRouter to obtain the URL parameters.
     // You can also use withRouter instead.
     // Reference: https://nextjs.org/docs/api-reference/next/router#userouter.
-    const { id } = useRouter().query;
 
     // To obtain the URL route parameter name, the object name must have the same name as the .tsx file name of this page.
     // In this case, our .tsx file is named [id].tsx, so we must bind the router.query object with name 'id'.
     return (
         <Layout title="Edit Customer">
-            <EditCustomer customerID={id}></EditCustomer>
+            <EditCustomer customerID={props.id}></EditCustomer>
         </Layout>
-    ); 
+    );
 }
 
 
@@ -303,9 +307,17 @@ function EditCustomerPage () {
  * Reference: https://nextjs.org/docs/basic-features/data-fetching#getserversideprops-server-side-rendering.
  * @param context 
  */
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getServerSideProps: GetServerSideProps<CustomerEditParamProps> = async (context) => {
+    let id = '';
+    if (context.params) {
+        const idRaw = context.params['id'];
+        if (idRaw && typeof (idRaw) === 'string') {
+            id = idRaw;
+        }
+    }
     return {
         props: {
+            id: id
         }
     };
 }
