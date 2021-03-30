@@ -1,10 +1,9 @@
 import { Layout } from "../shared/layout";
 import React from 'react';
 import { ProductClient } from "../../api/shop_api";
-import Swal from "sweetalert2";
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSpinner, faChevronUp, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { ProductForm } from "../../forms/ProductCreateOrUpdateComponent";
 
 
@@ -45,12 +44,12 @@ class CreateProduct extends React.Component<{}, {
         
                 <ProductForm 
                     setValues={{
-                        name: (e: React.ChangeEvent<HTMLInputElement>) => {
+                        name: (e?: React.ChangeEvent<HTMLInputElement>) => {
                             this.setState({
                                 name: e ? e.target.value : ''
                             })
                         },
-                        price: (e: React.ChangeEvent<HTMLInputElement>) => {
+                        price: (e?: React.ChangeEvent<HTMLInputElement>) => {
                             this.setState({
                                 price: e ? e.target.value : ''
                             })

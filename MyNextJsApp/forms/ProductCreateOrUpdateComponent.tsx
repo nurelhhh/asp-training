@@ -5,20 +5,20 @@ import Swal from 'sweetalert2';
 
 
 interface ProductFormProps {
-    values: {
+    values?: {
         name: string,
         price: string
     },
     setValues: {
-        name: () => void,
-        price: () => void,
+        name: (e?: React.ChangeEvent<HTMLInputElement>) => void,
+        price: (e?: React.ChangeEvent<HTMLInputElement>) => void,
     },
     onSubmit: () => void,
     clearForm: boolean,
     successMsg: string
 }
 
-export class ProductForm extends React.Component<{}, {
+export class ProductForm extends React.Component<ProductFormProps, {
     form: {
         name: string,
         price: string,
@@ -36,7 +36,7 @@ export class ProductForm extends React.Component<{}, {
 
     data: ProductFormProps;
 
-    constructor(props: ProductFormProps) {
+    constructor(props) {
         super(props);
 
         this.data = props;

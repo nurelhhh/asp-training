@@ -9,6 +9,8 @@ import { faPlus, faUserEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 const EditCustomerButton: React.FunctionComponent<{
     customerID: string,
+    name: string | undefined,
+    email: string | undefined
 }> = (props) => {
     return (
         <Link href={`/customer/edit/[id]`} as={`/customer/edit/${props.customerID}`}>

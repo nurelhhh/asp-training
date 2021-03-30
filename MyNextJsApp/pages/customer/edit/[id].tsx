@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner, faChevronUp, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import { useRouter, withRouter } from "next/router";
+import { useRouter } from "next/router";
 import { GetServerSideProps } from "next";
 
 
@@ -17,7 +17,9 @@ import { GetServerSideProps } from "next";
  */
 
 
-class EditCustomer extends React.Component<{}, {
+class EditCustomer extends React.Component<{
+    customerID: string | string[] | undefined
+}, {
     form: {
         name: string,
         email: string

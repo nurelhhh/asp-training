@@ -1,16 +1,17 @@
 import { Layout } from "../../shared/layout";
-import React, { useState } from 'react';
+import React from 'react';
 import { ProductClient } from "../../../api/shop_api";
-import Swal from "sweetalert2";
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSpinner, faChevronUp, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import { useRouter, withRouter } from "next/router";
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { useRouter } from "next/router";
 import { GetServerSideProps } from "next";
 import { ProductForm } from "../../../forms/ProductCreateOrUpdateComponent";
 
 
-class EditProduct extends React.Component<{}, {
+class EditProduct extends React.Component<{
+    productID: string | string[] | undefined
+}, {
     name: string,
     price: string,
     renderFormOk: boolean
@@ -84,12 +85,12 @@ class EditProduct extends React.Component<{}, {
                             price: this.prevPrice
                         }}
                         setValues={{
-                            name: (e: React.ChangeEvent<HTMLInputElement>) => {
+                            name: (e?: React.ChangeEvent<HTMLInputElement>) => {
                                 this.setState({
                                     name: e ? e.target.value : ''
                                 })
                             },
-                            price: (e: React.ChangeEvent<HTMLInputElement>) => {
+                            price: (e?: React.ChangeEvent<HTMLInputElement>) => {
                                 this.setState({
                                     price: e ? e.target.value : ''
                                 })
