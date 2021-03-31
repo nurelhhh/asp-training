@@ -1,4 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-dates/lib/css/_datepicker.css';
+import '../css/index.css';
 
 // import App from "next/app";
 import type { AppProps /*, AppContext */ } from 'next/app'
