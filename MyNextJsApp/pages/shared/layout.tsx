@@ -60,6 +60,8 @@ const NavigationBar: React.FunctionComponent<{}> = () => {
                     <NavigationLink href="/todo">Todo</NavigationLink>
                     <NavigationLink href="/customer">Customers</NavigationLink>
                     <NavigationLink href="/product">Products</NavigationLink>
+                    <NavigationLink href="/account/login">Login</NavigationLink>
+                    <NavigationLink href="/account/logout">Logout</NavigationLink>
                 </ul>
                 </div>
             </div>

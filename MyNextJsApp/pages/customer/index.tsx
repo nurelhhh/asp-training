@@ -92,22 +92,21 @@ class Customer extends React.Component<{}, {
         };
     }
 
-    async componentDidMount() {
+    async reloadCustomerData() {
         const client = new CustomerClient('https://localhost:44324');
         const response = await client.getAll();
         
         this.setState({
             customers: response
-        })
+        });
+    }
+
+    async componentDidMount() {
+        await this.reloadCustomerData();
     }
 
     onReloadCustomerData = async () => {
-        const client = new CustomerClient('https://localhost:44324');
-        const response = await client.getAll();
-        
-        this.setState({
-            customers: response
-        })
+        await this.reloadCustomerData();
     }
 
     render() {
