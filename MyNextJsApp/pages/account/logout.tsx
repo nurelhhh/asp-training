@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { UserManagerFactory } from "../../services/UserManagerFactory";
-import Layout from "../shared/layout";
+import Layout from "../../shared/layout";
 
 
 const Logout: React.FunctionComponent<{}> = () => {

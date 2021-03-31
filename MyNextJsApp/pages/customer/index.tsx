@@ -1,4 +1,4 @@
-import { Layout } from '../shared/layout';
+import { Layout } from '../../shared/layout';
 import React from "react";
 import { CustomerClient, CustomerListItem } from '../../api/shop_api';
 import Link from 'next/link';

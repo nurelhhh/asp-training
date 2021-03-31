@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import {useRouter} from 'next/router';
-import { UserManagerFactory } from '../../services/UserManagerFactory';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignInAlt, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { UserManagerFactory } from '../services/UserManagerFactory';
 
 function GetNavigationLinkClassName(active: boolean) {
     if (active) {
@@ -116,6 +116,7 @@ const NavigationBar: React.FunctionComponent<{}> = () => {
                     <NavigationLink href="/todo">Todo</NavigationLink>
                     <NavigationLink href="/customer">Customers</NavigationLink>
                     <NavigationLink href="/product">Products</NavigationLink>
+                    <NavigationLink href="/student/create">Students</NavigationLink>
                 </ul>
                 <LoginDropdown />
                 </div>

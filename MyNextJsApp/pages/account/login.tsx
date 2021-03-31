@@ -1,6 +1,6 @@
 import { UserManager, WebStorageStateStore } from "oidc-client";
 import { UserManagerFactory } from "../../services/UserManagerFactory";
-import Layout from "../shared/layout";
+import Layout from "../../shared/layout";
 
 
 

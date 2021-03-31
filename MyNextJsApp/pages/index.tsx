@@ -1,4 +1,4 @@
-import { Layout } from "./shared/layout";
+import { Layout } from "../shared/layout";
 import React, { useState } from 'react';
 import Link from 'next/link';
 

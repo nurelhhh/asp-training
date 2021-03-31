@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { UserManager, WebStorageStateStore } from "oidc-client";
 import { useEffect, useState } from "react";
 import { UserManagerFactory } from "../../services/UserManagerFactory";
-import Layout from "../shared/layout";
+import Layout from "../../shared/layout";
 
 
 

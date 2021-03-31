@@ -4,7 +4,7 @@ import Link from "next/link";
 import React from "react";
 import Swal, { SweetAlertResult } from "sweetalert2";
 import { ProductClient, ProductListItem } from "../../api/shop_api";
-import { Layout } from "../shared/layout";
+import Layout from "../../shared/layout";
 
 
 const ProductDeleteButton: React.FunctionComponent<{

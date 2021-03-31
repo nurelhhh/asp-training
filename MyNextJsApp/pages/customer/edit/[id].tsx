@@ -1,4 +1,4 @@
-import { Layout } from "../../shared/layout";
+import Layout from "../../../shared/layout";
 import React from 'react';
 import { CustomerClient } from "../../../api/shop_api";
 import Swal from "sweetalert2";

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Fakultas, FakultasClient, JurusanClient, Kampus, KampusClient } from "../../api/shop_api";
-import Layout from "../shared/layout";
+import Layout from "../../shared/layout";
 import Select from 'react-select';
 import { SingleDatePicker } from 'react-dates';
 import Moment from "moment";

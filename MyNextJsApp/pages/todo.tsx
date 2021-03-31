@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layout } from './shared/layout';
+import Layout from "../shared/layout";
 import Link from 'next/link';
 
 interface TodoListItem {
