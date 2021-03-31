@@ -5,6 +5,8 @@ import Link from 'next/link';
 import Swal, { SweetAlertResult } from 'sweetalert2';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faUserEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { UserManagerFactory } from '../../services/UserManagerFactory';
+import { CustomerClientWithAuth } from '../../services/NSwagWithAuthFactory';
 
 
 const EditCustomerButton: React.FunctionComponent<{
@@ -40,9 +42,16 @@ const DeleteCustomerButton: React.FunctionComponent<{
             return;   
         }
 
-        const client = new CustomerClient('https://localhost:44324');
-        await client.delete(props.customerID);
+        
+        const userManager = UserManagerFactory();
+        const user = await userManager.getUser();
 
+        if (!user) {
+            return;
+        }
+        
+        const client = CustomerClientWithAuth(user);
+        await client.delete(props.customerID);
         Swal.fire<SweetAlertResult>({
             toast: true,
             timerProgressBar: true,
@@ -93,12 +102,17 @@ class Customer extends React.Component<{}, {
     }
 
     async reloadCustomerData() {
-        const client = new CustomerClient('https://localhost:44324');
-        const response = await client.getAll();
-        
-        this.setState({
-            customers: response
-        });
+        const userManager = UserManagerFactory();
+        const user = await userManager.getUser();
+
+        if (user) {
+            const client = CustomerClientWithAuth(user);
+            const response = await client.getAll();
+            
+            this.setState({
+                customers: response
+            });
+        }
     }
 
     async componentDidMount() {

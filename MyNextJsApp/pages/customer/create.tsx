@@ -5,6 +5,8 @@ import Swal from "sweetalert2";
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner, faChevronUp, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { UserManagerFactory } from "../../services/UserManagerFactory";
+import { CustomerClientWithAuth } from "../../services/NSwagWithAuthFactory";
 
 class CreateCustomer extends React.Component<{}, {
     form: {
@@ -145,12 +147,17 @@ class CreateCustomer extends React.Component<{}, {
             busy: true
         });
         
+        
         try {
-            const client = new CustomerClient('https://localhost:44324');
-            await client.post({
-                name: form.name,
-                email: form.email,
-            });
+            const userManager = UserManagerFactory();
+            const user = await userManager.getUser();
+            if (user) {
+                const client = CustomerClientWithAuth(user);
+                await client.post({
+                    name: form.name,
+                    email: form.email,
+                });
+            }
         } catch (error) {
             Swal.fire({
                 title: 'Submit failed',

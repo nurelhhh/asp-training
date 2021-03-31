@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import {useRouter} from 'next/router';
+import { UserManagerFactory } from '../../services/UserManagerFactory';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSignInAlt, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 
 function GetNavigationLinkClassName(active: boolean) {
     if (active) {
@@ -44,6 +47,59 @@ const NavigationLink: React.FunctionComponent<{
     );
 }
 
+const LoginDropdown: React.FunctionComponent<{}> = () => {
+    const [fullName, setFullName] = useState('');
+    const [ready, setReady] = useState(false);
+
+    const getUserData = async () => {
+        const userManager = UserManagerFactory();
+        const user = await userManager.getUser();
+
+        setFullName(user?.profile?.name ?? '');
+        setReady(true);
+    }
+
+    useEffect(() => {
+        getUserData();
+    }, []);
+
+    if (ready === false) {
+        return <div></div>;
+    }
+
+    return (
+        <ul className="navbar-nav ms-auto">
+            <li className="nav-item dropdown ms-auto">
+                <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                {
+                    fullName ? fullName : 'guest'
+                }
+                </a>
+                <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                    {
+                        fullName ? 
+                        <li>
+                            <a className="dropdown-item" href="/account/logout">
+                                <FontAwesomeIcon className="me-2" icon={faSignOutAlt} />
+                                Logout
+                            </a>
+                        </li>
+                        :
+                        <li>
+                            <Link href="/account/login">
+                                <a className="dropdown-item">
+                                    <FontAwesomeIcon className="me-2" icon={faSignInAlt} />
+                                    Login
+                                </a>
+                            </Link>
+                        </li>
+                    }
+                </ul>
+            </li>
+        </ul>
+    );
+}
+
 const NavigationBar: React.FunctionComponent<{}> = () => {
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -60,9 +116,8 @@ const NavigationBar: React.FunctionComponent<{}> = () => {
                     <NavigationLink href="/todo">Todo</NavigationLink>
                     <NavigationLink href="/customer">Customers</NavigationLink>
                     <NavigationLink href="/product">Products</NavigationLink>
-                    <NavigationLink href="/account/login">Login</NavigationLink>
-                    <NavigationLink href="/account/logout">Logout</NavigationLink>
                 </ul>
+                <LoginDropdown />
                 </div>
             </div>
       </nav>

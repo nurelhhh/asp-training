@@ -2,8 +2,20 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 // import App from "next/app";
 import type { AppProps /*, AppContext */ } from 'next/app'
+import { useEffect } from 'react';
+import { UserManagerFactory } from '../services/UserManagerFactory';
 
-function MyApp({ Component, pageProps }: AppProps) {
+const MyApp: React.FunctionComponent<AppProps> = ({ Component, pageProps }) => {
+  useEffect(() => {
+    const userManager = UserManagerFactory(true);
+    userManager.events.addAccessTokenExpired(e => {
+      userManager.signinSilent();
+    });
+    userManager.events.addAccessTokenExpiring(e => {
+      userManager.signinSilent();
+    });
+  }, []);
+
   return <Component {...pageProps} />
 }
 

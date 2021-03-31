@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
-import { UserManager, WebStorageStateStore } from "oidc-client";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { UserManagerFactory } from "../../services/UserManagerFactory";
 import Layout from "../shared/layout";
 
@@ -8,8 +7,6 @@ import Layout from "../shared/layout";
 
 const LoginCallback: React.FunctionComponent<{}> = () => {
 
-    const [userFullName, setUserFullName] = useState('');
-    
     useEffect(() => {
         handleLogin();
     }, []);
@@ -23,28 +20,16 @@ const LoginCallback: React.FunctionComponent<{}> = () => {
 
         let success = false;
         try {
-            const user = await userManager.signinRedirectCallback(location.href);
-            // const data = await userManager.getUser();
-            console.log(user);
-    
+            const user = await userManager.signinSilentCallback(location.href);
+            success = true;
         } catch (err) {
-            location.href = '/account/login';
+            console.log(err);
         }
-
-        location.href = '/';
     }
 
-
-    if (userFullName) {
-        return (
-            <div>
-                <h1>Hello {userFullName}</h1>
-            </div>
-        );
-    }
     return (
         <div>
-            Loading...
+            Loggin in...
         </div>
     );
 }

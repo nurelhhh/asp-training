@@ -7,6 +7,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner, faChevronUp, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { GetServerSideProps } from "next";
 import ErrorPage from 'next/error';
+import { UserManagerFactory } from "../../../services/UserManagerFactory";
+import { CustomerClientWithAuth } from "../../../services/NSwagWithAuthFactory";
 
 /**
  * How this edit page works:
@@ -65,7 +67,14 @@ class EditCustomer extends React.Component<{
         let user;
 
         try {
-            const client = new CustomerClient('https://localhost:44324');
+            const userManager = UserManagerFactory();
+            const userAPI = await userManager.getUser();
+
+            if (!userAPI) {
+                return;
+            }
+            const client = CustomerClientWithAuth(userAPI);
+            // const client = new CustomerClient('https://localhost:44324');
             user = await client.get(this.customerID);
         } catch (err) {
             this.setState({
@@ -191,11 +200,19 @@ class EditCustomer extends React.Component<{
         });
 
         try {
-            const client = new CustomerClient('https://localhost:44324');
+            const userManager = UserManagerFactory();
+            const userAPI = await userManager.getUser();
+
+            if (!userAPI) {
+                return;
+            }
+
+            const client = CustomerClientWithAuth(userAPI);
             await client.put(this.customerID, {
                 name: form.name,
                 email: form.email
             });
+            
         } catch (error) {
             Swal.fire({
                 title: 'Submit failed',
