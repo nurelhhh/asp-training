@@ -100,6 +100,33 @@ const LoginDropdown: React.FunctionComponent<{}> = () => {
     );
 }
 
+function BookingDropdown() {
+    return (
+        <li className="nav-item dropdown">
+            <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Bookings
+            </a>
+            <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li>
+                    <Link href="/booking">
+                        <a className="dropdown-item" href="#">Index</a>
+                    </Link>
+                </li>
+                <li>
+                    <Link href="/booking/create">
+                        <a className="dropdown-item">Date</a>
+                    </Link>
+                </li>
+                <li>
+                    <Link href="/booking/create-moment-airbnb">
+                        <a className="dropdown-item">Date Time</a>
+                    </Link>
+                </li>
+            </ul>
+        </li>
+    );
+}
+
 const NavigationBar: React.FunctionComponent<{}> = () => {
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -117,6 +144,7 @@ const NavigationBar: React.FunctionComponent<{}> = () => {
                     <NavigationLink href="/customer">Customers</NavigationLink>
                     <NavigationLink href="/product">Products</NavigationLink>
                     <NavigationLink href="/student/create">Students</NavigationLink>
+                    <BookingDropdown />
                 </ul>
                 <LoginDropdown />
                 </div>

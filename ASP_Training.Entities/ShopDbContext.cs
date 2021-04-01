@@ -17,6 +17,8 @@ namespace ASP_Training.Entities
 
         public DbSet<Product> Products { set; get; }
 
+
         public DbSet<Cart> Carts { set; get; }
+        public DbSet<Booking> Bookings { set; get; }
     }
 }
