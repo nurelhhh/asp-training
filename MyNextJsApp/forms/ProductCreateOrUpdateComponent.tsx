@@ -2,7 +2,13 @@ import { faChevronUp, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import Swal from 'sweetalert2';
+import Joi, { string } from 'joi';
 
+
+interface ProductFormValues {
+    name: string;
+    price: string;
+}
 
 interface ProductFormProps {
     values?: {
@@ -94,20 +100,58 @@ export class ProductForm extends React.Component<ProductFormProps, {
     }
 
     async validate() {
+        const schema: {
+            [key in keyof ProductFormValues]?: Joi.SchemaLike
+        } = {
+            name: '',
+            price: ''
+        };
+
+        schema.name = Joi
+            .string()
+            .empty()
+            .min(1)
+            .max(255)
+            .messages({
+                'string.empty': 'Nama tidak boleh kosong',
+                'string.min': 'Nama minimal harus 1 karakter',
+                'string.max': 'Nama maksimal harus 255 karakter',
+            });
+        schema.price = Joi
+            .number()
+            .integer()
+            .min(0)
+            .max(10_000_000_000)
+            .messages({
+                'number.base': 'Harga tidak boleh kosong',
+                'number.min': 'Harga minimal adalah Rp 0',
+                'number.max': 'Harga maksimal adalah Rp 10.000.000.000'
+            });
+
+        const validation = Joi
+            .object(schema);
+
+        const validationResult = validation.validate(this.state.form, {
+            abortEarly: false
+        });
+
+        const err = validationResult.error;
+
+        console.log(typeof (err));
+        console.log(err?.details);
+
+        if (!err) {
+            return undefined;
+        }
+
         const errors = {
             name: '',
             price: ''
-        }
+        };
 
-        if (!this.state.form.name) {
-            errors.name = 'Name is required';
-        }
-
-        if (!this.state.form.price) {
-            errors.price = 'Price is required';
-        } else {
-            if (parseInt(this.state.form.price) < 0) {
-                errors.price = 'Price is not valid';
+        for (const detail of err.details) {
+            if (detail.path.toString() in errors) {
+                errors[detail.path.toString()] = detail.message;
             }
         }
 
